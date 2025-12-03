@@ -1,26 +1,41 @@
+<div align="center">
+
 # 🔐 Auth BFF OIDC Template
 
-Production-ready SvelteKit template for OAuth/OIDC authentication using the Backend-for-Frontend (BFF) pattern.
+[![License](https://img.shields.io/badge/License-PolyForm%20Shield-red.svg)](LICENSE)
+[![Author](https://img.shields.io/badge/Author-Artyom%20Pryanishnikov-purple.svg)](https://github.com/FrankFMY)
+[![SvelteKit](https://img.shields.io/badge/SvelteKit-2-FF3E00.svg?logo=svelte)](https://kit.svelte.dev/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.9-3178C6.svg?logo=typescript)](https://www.typescriptlang.org/)
+
+**Production-ready SvelteKit template for OAuth/OIDC authentication using the Backend-for-Frontend (BFF) pattern**
+
+[🚀 Быстрый старт](#-quick-start) • [📖 Документация](#-project-structure) • [📄 Лицензия](#-legal--license)
+
+</div>
+
+---
 
 ## ✨ Features
 
-- **🔒 Secure by Design**: Tokens never leave the server, only HTTP-only cookies in the browser
-- **⚡ PKCE Flow**: Protection against authorization code interception attacks
-- **📦 Flexible Session Storage**:
-  - Memory Store (development)
-  - Redis Store (production, recommended)
-  - PostgreSQL Store (if you already use Postgres)
-- **🛡️ Rate Limiting**: Built-in protection against brute-force attacks
-- **🎯 Type-Safe**: Full TypeScript support with SvelteKit's generated types
-- **🚀 Svelte 5**: Modern reactive patterns with runes
-- **🔄 Token Refresh**: Automatic token renewal before expiration
-- **🧹 Session Cleanup**: Automatic cleanup of expired sessions
+| Функция | Описание |
+|---------|----------|
+| **🔒 Secure by Design** | Токены никогда не покидают сервер, только HTTP-only cookies в браузере |
+| **⚡ PKCE Flow** | Защита от перехвата authorization code |
+| **📦 Гибкое хранение сессий** | Memory (dev), Redis (prod), PostgreSQL |
+| **🛡️ Rate Limiting** | Встроенная защита от brute-force атак |
+| **🎯 Type-Safe** | Полная поддержка TypeScript с типами SvelteKit |
+| **🚀 Svelte 5** | Современные реактивные паттерны с runes |
+| **🔄 Token Refresh** | Автоматическое обновление токенов перед истечением |
+| **🧹 Session Cleanup** | Автоматическая очистка истекших сессий |
+| **🍪 HTTP-Only Cookies** | Безопасное хранение сессий |
+| **🛡️ CSRF Protection** | Встроенная защита от CSRF атак |
 
 ## 📋 Prerequisites
 
-- Node.js >= 20.0.0
-- pnpm >= 9.0.0 (or npm)
-- OAuth/OIDC Provider (Keycloak, Auth0, Okta, etc.)
+- [Node.js](https://nodejs.org/) >= 20.0.0
+- [pnpm](https://pnpm.io/) >= 9.0.0 (или npm/yarn)
+- OAuth/OIDC Provider (Keycloak, Auth0, Okta, Google, Microsoft и т.д.)
+- (Опционально) Redis или PostgreSQL для production сессий
 
 ## 🚀 Quick Start
 
@@ -163,6 +178,43 @@ src/
 └── hooks.server.ts                # Global hooks (auth middleware)
 ```
 
+## 🛠️ Technology Stack
+
+### Frontend
+
+| Технология | Версия | Назначение |
+|------------|--------|------------|
+| [SvelteKit](https://kit.svelte.dev/) | 2.x | Fullstack фреймворк |
+| [Svelte 5](https://svelte.dev/) | 5.x | UI библиотека с Runes |
+| [TypeScript](https://www.typescriptlang.org/) | 5.9+ | Типизация |
+| [Vite](https://vitejs.dev/) | 7.x | Сборщик и dev server |
+
+### Backend
+
+| Технология | Версия | Назначение |
+|------------|--------|------------|
+| [SvelteKit](https://kit.svelte.dev/) | 2.x | Backend API routes |
+| [Node.js](https://nodejs.org/) | 20+ | JavaScript runtime |
+
+### Session Storage
+
+| Технология | Назначение |
+|------------|------------|
+| **Memory Store** | Development (in-memory) |
+| [Redis](https://redis.io/) | Production sessions (через ioredis) |
+| [PostgreSQL](https://www.postgresql.org/) | Production sessions (через pg) |
+
+### Development Tools
+
+| Технология | Назначение |
+|------------|------------|
+| [pnpm](https://pnpm.io/) | Package manager |
+| [ESLint](https://eslint.org/) | Линтинг кода |
+| [Prettier](https://prettier.io/) | Форматирование кода |
+| [tsx](https://github.com/esbuild-kit/tsx) | TypeScript execution |
+
+---
+
 ## 🔐 Authentication Flow
 
 ```mermaid
@@ -188,13 +240,15 @@ sequenceDiagram
 
 ## 🛡️ Security Features
 
-- **No Token Exposure**: Access/refresh tokens never reach the browser
-- **HTTP-Only Cookies**: Session IDs are stored in secure, HTTP-only cookies
-- **PKCE**: Protection against authorization code interception
-- **Rate Limiting**: Configurable limits on authentication endpoints
-- **CSRF Protection**: Built-in SvelteKit CSRF protection
-- **Token Refresh**: Automatic token renewal 5 minutes before expiration
-- **Session Expiration**: Automatic cleanup of expired sessions
+| Функция | Реализация |
+|---------|------------|
+| **Токены не покидают сервер** | Access/refresh токены хранятся только на сервере |
+| **HTTP-Only Cookies** | Session IDs в безопасных HTTP-only cookies |
+| **PKCE** | Защита от перехвата authorization code |
+| **Rate Limiting** | Настраиваемые лимиты на auth endpoints |
+| **CSRF Protection** | Встроенная защита SvelteKit от CSRF |
+| **Token Refresh** | Автообновление за 5 минут до истечения |
+| **Session Expiration** | Автоматическая очистка истекших сессий |
 
 ## 📝 Usage Examples
 
@@ -285,39 +339,64 @@ const sessionStore = new PostgresSessionStore(pool, {
 });
 ```
 
-## 🧪 Development
+## 📝 Commands
+
+### Development
 
 ```bash
-# Run dev server
-pnpm dev
+pnpm dev              # Запустить dev сервер
+pnpm check            # TypeScript проверка
+pnpm check:watch      # TypeScript проверка в watch режиме
+pnpm lint             # Проверка ESLint
+pnpm format           # Форматирование Prettier
+```
 
-# Type checking
-pnpm check
+### Build & Deploy
 
-# Linting
-pnpm lint
+```bash
+pnpm build            # Production сборка
+pnpm preview          # Превью production сборки
+```
 
-# Format code
-pnpm format
+### Utilities
 
-# Build for production
-pnpm build
-
-# Preview production build
-pnpm preview
+```bash
+pnpm copyright:add    # Добавить copyright headers в файлы
 ```
 
 ## 🚀 Deployment
 
 ### Environment Variables
 
-Ensure these environment variables are set in production:
+Создайте `.env` файл в корне проекта или настройте переменные окружения в production:
 
-- `OIDC_ISSUER`
-- `OIDC_CLIENT_ID`
-- `OIDC_CLIENT_SECRET`
-- `OIDC_REDIRECT_URI`
-- `REDIS_URL` or `DATABASE_URL` (depending on session store)
+```env
+# OIDC Configuration
+OIDC_ISSUER=https://your-oidc-provider.com
+OIDC_CLIENT_ID=your-client-id
+OIDC_CLIENT_SECRET=your-client-secret
+OIDC_REDIRECT_URI=http://localhost:5173/auth/callback
+
+# Session Storage (выберите один)
+REDIS_URL=redis://localhost:6379
+# или
+DATABASE_URL=postgresql://user:password@localhost:5432/dbname
+
+# Optional
+SESSION_SECRET=your-random-secret-key
+```
+
+### Required Variables
+
+| Переменная | Описание | Обязательная |
+|------------|----------|--------------|
+| `OIDC_ISSUER` | URL OIDC провайдера | ✅ |
+| `OIDC_CLIENT_ID` | Client ID от OIDC провайдера | ✅ |
+| `OIDC_CLIENT_SECRET` | Client Secret от OIDC провайдера | ✅ |
+| `OIDC_REDIRECT_URI` | Redirect URI для callback | ✅ |
+| `REDIS_URL` | URL Redis (для Redis store) | ⚠️ Для production |
+| `DATABASE_URL` | URL PostgreSQL (для Postgres store) | ⚠️ Для production |
+| `SESSION_SECRET` | Секрет для сессий | ❌ Опционально |
 
 ### Build
 
@@ -343,18 +422,90 @@ The build output will be in the `.svelte-kit` directory. Configure your deployme
 
 ## 🤝 Contributing
 
+1. Форкните репозиторий
+2. Создайте ветку для фичи (`git checkout -b feature/amazing-feature`)
+3. Закоммитьте изменения (`git commit -m 'Add amazing feature'`)
+4. Запушьте в ветку (`git push origin feature/amazing-feature`)
+5. Откройте Pull Request
+
 Contributions are welcome! Please feel free to submit a Pull Request.
 
-## 📄 License
+## 📄 Legal & License
 
-MIT © [FrankFMY](https://github.com/FrankFMY)
+### ⚠️ Важное уведомление / Important Notice
+
+**RU**: Данное ПО разработано **Артёмом Прянишниковым** в инициативном порядке. НЕ является служебным произведением (ст. 1295 ГК РФ). Права принадлежат автору.
+
+**EN**: This software was developed **independently by Artyom Pryanishnikov**. NOT a work-for-hire. All rights reserved.
+
+<div align="center">
+
+[![License](https://img.shields.io/badge/License-PolyForm%20Shield-red.svg)](LICENSE)
+[![Author](https://img.shields.io/badge/Author-Artyom%20Pryanishnikov-purple.svg)](https://github.com/FrankFMY)
+
+| Разрешено / Allowed | Запрещено / Restricted |
+|---------------------|------------------------|
+| ✅ Личное использование | ❌ Коммерция без договора |
+| ✅ Изучение кода | ❌ SaaS / Перепродажа |
+| ✅ Внутренние тесты | ❌ Удаление авторства |
+| ✅ Форки для обучения | ❌ Конкурирующие продукты |
+
+**Commercial Contact**: [Pryanishnikovartem@gmail.com](mailto:Pryanishnikovartem@gmail.com)
+
+</div>
+
+### PolyForm Shield 1.0.0
+
+This project is licensed under **PolyForm Shield License 1.0.0** with proprietary clauses protecting the author's intellectual property rights.
+
+#### Initiative Development Notice
+
+This software is an **INITIATIVE DEVELOPMENT** by Artyom Pryanishnikov.
+
+- Created independently, **WITHOUT** Technical Assignment (TZ) or direct order
+- Ownership and IP rights are **NOT** transferred automatically with employment
+- Rights remain with the Author until a separate Assignment Agreement is signed
+- Legal basis: Article 1295 of the Civil Code of the Russian Federation
+
+#### Commercial Use
+
+Any commercial use by entities other than the Copyright Holder requires a separate license agreement.
+
+**Contact for licensing**: Pryanishnikovartem@gmail.com
+
+#### Governing Law
+
+Disputes shall be resolved in the **Arbitrazh Court of Saratov Region** (Арбитражный суд Саратовской области), Saratov, Russia.
+
+---
+
+## 👤 Author
+
+<div align="center">
+
+**Artyom Pryanishnikov** (Артём Прянишников)
+
+[![GitHub](https://img.shields.io/badge/GitHub-FrankFMY-181717.svg?logo=github)](https://github.com/FrankFMY)
+[![Email](https://img.shields.io/badge/Email-Pryanishnikovartem%40gmail.com-EA4335.svg?logo=gmail)](mailto:Pryanishnikovartem@gmail.com)
+
+</div>
+
+---
 
 ## 📧 Contact
 
-- GitHub: [@FrankFMY](https://github.com/FrankFMY)
-- Email: Pryanishnikovartem@gmail.com
+- **GitHub**: [@FrankFMY](https://github.com/FrankFMY)
+- **Email**: Pryanishnikovartem@gmail.com
 
 ## 🙏 Acknowledgments
 
 - Inspired by the BFF (Backend-for-Frontend) security pattern
 - Built with [SvelteKit](https://kit.svelte.dev/) and [Svelte 5](https://svelte.dev/)
+
+---
+
+<div align="center">
+
+⭐ **Если проект был полезен, поставьте звезду!** ⭐
+
+</div>

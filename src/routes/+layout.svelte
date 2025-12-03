@@ -1,3 +1,12 @@
+<!--
+  Auth BFF OIDC Template — Initiative Development / Инициативная разработка
+  @author Artyom Pryanishnikov <Pryanishnikovartem@gmail.com>
+  @copyright 2025 Artyom Pryanishnikov | @license PolyForm-Shield-1.0.0
+  
+  Created independently, without TZ. IP rights remain with Author.
+  Commercial use requires agreement. Contact: Pryanishnikovartem@gmail.com
+-->
+
 <!-- src/routes/+layout.svelte -->
 <script lang="ts">
   import type { LayoutData } from "./$types";
